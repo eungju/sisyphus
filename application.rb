@@ -1,33 +1,45 @@
+require 'rubygems'
+require 'bundler/setup'
 require 'grit'
 require 'sinatra'
 require 'kramdown'
 
-repo = Grit::Repo.new('/Users/eungju/sisyphus-ng/wikidata')
+REPO = Grit::Repo.new('/Users/eungju/sisyphus-ng/wikidata')
 
-get %r{/([^;]*)(?:;(\w+))?} do |path, view|
-  puts "path: #{path}, view: #{view}"
+def get_content(path)
   if path == ""
-    @content = repo.tree
-    @path = ""
+    REPO.tree
   else
-    @content = repo.tree / path.force_encoding("ASCII-8BIT")
-    @path = path
-  end
-  if @content.is_a?(Grit::Tree)
-    erb :tree
-  elsif @content.is_a?(Grit::Blob)
-    if view == "edit"
-      erb :blob_edit
-    elsif view == ""
-      erb :blob_history
-    else
-      erb :blob
-    end
+    REPO.tree / path.force_encoding("ASCII-8BIT")
   end
 end
 
-post %r{/([^;]*)(?:;(\w+))?} do |path, view|
-  redirect path
+get %r{^/(index)?$} do
+  @path = ""
+  @content = get_content @path
+  erb :tree
+end
+
+get %r{^/view/(.*)$} do |path|
+  @path = path
+  @content = get_content @path
+  if @content.is_a?(Grit::Tree)
+    erb :tree
+  elsif @content.is_a?(Grit::Blob)
+    erb :blob
+  end
+end
+
+get %r{^/edit/(.*)$} do |path|
+  @path = path
+  @content = get_content path
+  erb :blob_edit
+end
+
+post %r{^/edit/(.*)$} do |path|
+  @path = path
+  @content = get_content path
+  redirect "/view/" + @path
 end
 
 helpers do

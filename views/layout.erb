@@ -1,9 +1,13 @@
 <html>
+  <head>
+    <title>/<%=@path%> - Sisyphus Wiki</title>
+  </head>
   <body>
-    <h1><%=@path%></h1>
+    <h1>/<%=@path%></h1>
     <ol>
-      <li><a href="/<%=@path%>;edit">Edit</a></li>
-      <li><a href="/<%=@path%>;history">History</a></li>
+      <li><a href="/view/<%=@path%>">View</a></li>
+      <li><a href="/edit/<%=@path%>">Edit</a></li>
+      <li><a href="/commits/<%=@path%>">Commits</a></li>
     </ol>
     <div>
       <%= yield %>
