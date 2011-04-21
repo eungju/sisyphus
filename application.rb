@@ -10,7 +10,7 @@ def get_content(path)
   if path == ""
     REPO.tree
   else
-    REPO.tree / path.force_encoding("ASCII-8BIT")
+    REPO.tree / path.clone.force_encoding("ASCII-8BIT")
   end
 end
 
