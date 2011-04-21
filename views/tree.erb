@@ -1,0 +1,5 @@
+<ol>
+  <% @content.contents.each do |f| %>
+    <li><a href="<%=@path == "" ? "" : "/" + @path%>/<%=f.name%>"><%=f.name%></a></li>
+  <% end %>
+</ol>

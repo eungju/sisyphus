@@ -1,0 +1,12 @@
+<html>
+  <body>
+    <h1><%=@path%></h1>
+    <ol>
+      <li><a href="/<%=@path%>;edit">Edit</a></li>
+      <li><a href="/<%=@path%>;history">History</a></li>
+    </ol>
+    <div>
+      <%= yield %>
+    </div>
+  </body>
+</html>

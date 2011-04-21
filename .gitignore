@@ -1,0 +1,9 @@
+.bundle
+
+Gemfile.lock
+.rspec
+*.tmproj
+coverage
+*.kpf
+.DS_Store
+.idea
